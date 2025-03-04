@@ -11,18 +11,22 @@ import java.util.stream.Collectors;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 
-abstract public class PaymentService {
+public class PaymentService {
+    private final WebApiExRateProvider exRateProvider;
+
+    public PaymentService(){
+        this.exRateProvider = new WebApiExRateProvider();
+    }
+
     public Payment prepare(Long orderId, String currency, BigDecimal foreignCurrencyAmount) throws IOException {
 
-        //https://open.er-api.com/v6/latest/USD
-        BigDecimal exRate = getExRate(currency);
+        //WebApiExRateProvider exRateProvider = new WebApiExRateProvider();
+        BigDecimal exRate = exRateProvider.getWebExRate(currency);
         BigDecimal convertedAmount = foreignCurrencyAmount.multiply(exRate);
         LocalDateTime validUntil = LocalDateTime.now().plusMinutes(30);
 
         return new Payment(orderId, currency, foreignCurrencyAmount, exRate, convertedAmount, validUntil);
     }
-
-    abstract BigDecimal getExRate(String currency) throws IOException;
 
 
 }
