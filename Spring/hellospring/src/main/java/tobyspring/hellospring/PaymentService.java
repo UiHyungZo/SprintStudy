@@ -13,7 +13,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class PaymentService {
     //private final WebApiExRateProvider exRateProvider;
-    private final SimpleExRateProvider exRateProvider;
+    private final ExRateProvider exRateProvider;
 
     public PaymentService(){
         this.exRateProvider = new SimpleExRateProvider();
