@@ -15,8 +15,8 @@ public class PaymentService {
     //private final WebApiExRateProvider exRateProvider;
     private final ExRateProvider exRateProvider;
 
-    public PaymentService(){
-        this.exRateProvider = new SimpleExRateProvider();
+    public PaymentService(ExRateProvider exRateProvider){
+        this.exRateProvider = exRateProvider;
     }
 
     public Payment prepare(Long orderId, String currency, BigDecimal foreignCurrencyAmount) throws IOException {
